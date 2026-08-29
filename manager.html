@@ -8,12 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{--gD:#3a9e5f;--gDD:#1a6b3c;--gL:#e8f5e9;--gM:#a8d8b8;--rL:#fcd5d5;--rD:#c0392b;--gold:#b8860b;--bg:#f4faf5;--sf:#fff;--bd:#d0e8d5;--tx:#243228;--mu:#6b7b6e;--done-bg:#e8f5e9;--done-border:#a8d8b8;--done-text:#1a6b3c;--sh:0 2px 16px rgba(26,107,60,.08)}
+:root{--gD:#1a6b3c;--gDD:#0f4a28;--gL:#d4f4e2;--gM:#5cb87a;--rL:#fcd5d5;--rD:#c0392b;--gold:#b8860b;--bg:#fdfaf5;--sf:#ffffff;--bd:#e2d9c8;--tx:#2c2416;--mu:#7a6a52;--done-bg:#d4f4e2;--done-border:#5cb87a;--done-text:#1a6b3c;--sh:0 2px 16px rgba(0,0,0,.08)}
 *{box-sizing:border-box;margin:0;padding:0}html,body{overflow-x:hidden;width:100%}
 body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:var(--tx);padding:1rem .6rem 4rem}
 .hdr{text-align:center;padding:1.4rem .8rem;background:linear-gradient(135deg,var(--gDD),var(--gD));border-radius:16px;color:#fff;margin-bottom:1.1rem;box-shadow:var(--sh)}
-.bsm{font-size:15px;color:#d8f0e0;margin-bottom:5px}
-.hdr h1{font-size:23px;font-weight:700;color:#d8f0e0;font-family:'Amiri',serif}
+.bsm{font-size:15px;color:var(--gold);margin-bottom:5px}
+.hdr h1{font-size:23px;font-weight:700;color:#d4a017;font-family:'Amiri',serif}
 .hdr p{font-size:12px;opacity:.8}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:1rem}
 .sc{background:var(--sf);border-radius:12px;padding:11px 6px;text-align:center;border:1px solid var(--bd);box-shadow:0 1px 6px rgba(0,0,0,.05)}
@@ -34,7 +34,7 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 .bf{width:100%;border-radius:4px 4px 0 0;min-height:3px;background:var(--gD)}
 .bv{font-size:9px;font-weight:700;color:var(--gD)}
 .bn{font-size:8px;color:var(--mu);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
-.rank-item{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:10px;margin-bottom:6px;border:1px solid var(--bd);background:#f8fcf8}
+.rank-item{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:10px;margin-bottom:6px;border:1px solid var(--bd);background:#fff}
 .rank-item.t1{background:linear-gradient(135deg,#fef9e7,#fef3cd);border-color:#f0c040}
 .rank-item.t2{background:linear-gradient(135deg,#f8f9fa,#e9ecef);border-color:#adb5bd}
 .rank-item.t3{background:linear-gradient(135deg,#fdf5ed,#f5e6d3);border-color:#cd9a6c}
@@ -50,8 +50,8 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 .admin-btn{font-family:inherit;font-size:12px;font-weight:700;border-radius:9px;padding:10px;border:none;cursor:pointer;width:100%;margin-top:8px}
 .admin-del{background:#fff8e1;color:#856404;border:1.5px solid #f0c040}
 .admin-panel-note{font-size:10px;color:var(--mu);line-height:1.6;margin-top:7px;text-align:center}
-.cat-rank-btn,.toggle-btn{width:100%;padding:8px 10px;background:#e8f5e9;color:var(--gDD);border:1px solid var(--gM);border-radius:9px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;margin:5px 0;text-align:right;display:flex;justify-content:space-between;align-items:center}
-.cat-rank-body{display:none;background:#f8fcf8;border:1px solid var(--bd);border-radius:9px;padding:8px;margin-bottom:8px}
+.cat-rank-btn,.toggle-btn{width:100%;padding:8px 10px;background:#e8f6ee;color:var(--gDD);border:1px solid var(--gM);border-radius:9px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;margin:5px 0;text-align:right;display:flex;justify-content:space-between;align-items:center}
+.cat-rank-body{display:none;background:#fff;border:1px solid var(--bd);border-radius:9px;padding:8px;margin-bottom:8px}
 .how-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:14px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--sh)}
 .how-hdr{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--gD);color:#fff;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;text-align:right}
 .how-body{display:none;padding:12px 14px;font-size:11.5px;color:var(--tx)}
@@ -65,7 +65,7 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 .rank-chip.first{background:#fef9e7;border-color:#f0c040}
 .gc-hdr{padding:12px 14px;background:linear-gradient(135deg,var(--gDD),var(--gD));display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .gc-name{font-size:15px;font-weight:700;color:#fff}
-.gc-pts{color:#d8f0e0;font-size:12px;font-weight:600}
+.gc-pts{color:#a8e6c0;font-size:12px;font-weight:600}
 .gc-body{padding:11px 12px}
 .prog-row{display:flex;justify-content:space-between;font-size:10px;color:var(--mu);margin-bottom:3px}
 .prog-t{background:#e0ece0;border-radius:10px;height:6px;overflow:hidden;margin-bottom:8px}
@@ -87,7 +87,7 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 .detail-table th.catH{width:18px}.detail-table th.ibH{width:28%}.detail-table th.ptsH{width:22px}.detail-table th.dayH{width:5.5%}
 .detail-table td{padding:3px 1px;border:1px solid #e5eee5;text-align:center;vertical-align:middle}
 .detail-table td.ibada{text-align:right;font-weight:700;font-size:9.5px;line-height:1.25;overflow:hidden}
-.detail-table td.cat{background:#e8f5e9;color:var(--gDD);font-weight:700;writing-mode:vertical-lr;text-orientation:mixed;font-size:8px;max-width:18px}
+.detail-table td.cat{background:#e8f6ee;color:var(--gDD);font-weight:700;writing-mode:vertical-lr;text-orientation:mixed;font-size:8px;max-width:18px}
 .id{width:17px;height:17px;border-radius:4px;font-size:8px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;border:0.5px solid var(--bd)}
 .id.d{background:var(--done-bg);color:var(--done-text);border-color:var(--done-border)}.id.m{background:var(--rL);color:var(--rD)}.id.e{background:#f5f5f5;color:#ccc}
 .empty{text-align:center;padding:3rem 1rem;color:var(--mu);font-size:13px;line-height:2}
@@ -188,6 +188,7 @@ const GOAL_LABELS={
 };
 const GOAL_UNITS={3:'',4:'جزء',8:'ركعة',10:'ركعة',11:'ركعة'};
 const VARIABLE_BONUS_ROWS=new Set([3,4,8,10,11]);
+const EDITABLE_BASIC_ROWS=new Set([13,14]);
 const CAT_ORDER=['الأذكار','القرآن','القيام','الصلاة','الذكر','صدقة','تزكية'];
 let girlsData=[];
 const sk=(r,d)=>r+'-'+d;
@@ -195,9 +196,10 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;',
 function readJSON(v,fb){try{return v?JSON.parse(v):fb}catch(e){return fb}}
 
 function getPts(g,ri,d){
-  if(ROWS[ri].fixed||ROWS[ri].bonus||!VARIABLE_BONUS_ROWS.has(ri))return ROWS[ri].pts;
   const key=ri+'_'+d;
   const ep=g.editedPts||{};
+  if(EDITABLE_BASIC_ROWS.has(ri))return ep[key]!==undefined?Math.max(0,Math.min(Number(ep[key])||0,ROWS[ri].pts)):ROWS[ri].pts;
+  if(ROWS[ri].fixed||ROWS[ri].bonus||!VARIABLE_BONUS_ROWS.has(ri))return ROWS[ri].pts;
   if(ep[key]!==undefined)return Number(ep[key])||0;
   // هدف شخصي لركعات القيام (ri=8)
   const goals=g.personalGoals||{};
@@ -216,6 +218,7 @@ function getBasePts(g,ri,d){
   const key=ri+'_'+d;
   const ep=g.editedPts||{};
   const orig=ROWS[ri].pts;
+  if(EDITABLE_BASIC_ROWS.has(ri))return ep[key]!==undefined?Math.max(0,Math.min(Number(ep[key])||0,orig)):orig;
   if(!VARIABLE_BONUS_ROWS.has(ri))return orig;
   if(ep[key]!==undefined)return Math.min(Number(ep[key])||0,orig);
   return orig;
@@ -402,14 +405,14 @@ function girlCard(g,gi,sorted,maxG){
   const bonusHtml=totalBonus>0?
     '<div class="bonus-box"><div class="bonus-title">⭐ البونص الكلي: '+totalBonus+' نقطة</div>'+
     '<div style="font-size:10px;color:#7a6a52">المجموع الأساسي: '+totalBase+' | البونص: +'+totalBonus+'</div></div>':'';
-  const pctColor=dayPct!==null?(dayPct>=80?'#1a6b3c':dayPct>=50?'#3a9e5f':'#c0392b'):'#aaa';
-  const pctBadge=dayPct!==null?'<div style="text-align:center;background:#e8f5e9;border:1px solid var(--bd);border-radius:10px;padding:6px 10px;margin-bottom:8px"><div style="font-size:18px;font-weight:700;color:'+pctColor+'">'+dayPct+'%</div><div style="font-size:9px;color:var(--mu)">معدل اليوم من 100 (أساسي فقط)</div></div>':'';
-  const pctLabel=dayPct!==null?'<span style="background:#e8f5e9;border:1px solid var(--bd);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:700;color:'+pctColor+'">📊 '+dayPct+'%</span>':'';
+  const pctColor=dayPct!==null?(dayPct>=80?'#1a6b3c':dayPct>=50?'#b8860b':'#c0392b'):'#aaa';
+  const pctBadge=dayPct!==null?'<div style="text-align:center;background:#e8f6ee;border:1px solid var(--bd);border-radius:10px;padding:6px 10px;margin-bottom:8px"><div style="font-size:18px;font-weight:700;color:'+pctColor+'">'+dayPct+'%</div><div style="font-size:9px;color:var(--mu)">معدل اليوم من 100 (أساسي فقط)</div></div>':'';
+  const pctLabel=dayPct!==null?'<span style="background:#e8f6ee;border:1px solid var(--bd);border-radius:8px;padding:2px 8px;font-size:11px;font-weight:700;color:'+pctColor+'">📊 '+dayPct+'%</span>':'';
   const body=detailsTable(g)+'<div style="font-size:10px;color:var(--mu);margin-top:8px;text-align:left">آخر إرسال: '+esc(g.lastUpdate||'—')+'</div>';
   return '<div class="girl-card">'
     +'<div class="gc-hdr" onclick="toggleGirlCard('+gi+')">'
     +'<div class="gc-name">'+medal+' '+esc(g.name)+'</div>'
-    +'<div style="display:flex;align-items:center;gap:6px">'+pctLabel+'<div class="gc-pts">'+g.grand+' نقطة</div><span id="garr_'+gi+'" style="color:#d8f0e0;font-size:12px">▼</span></div>'
+    +'<div style="display:flex;align-items:center;gap:6px">'+pctLabel+'<div class="gc-pts">'+g.grand+' نقطة</div><span id="garr_'+gi+'" style="color:#a8e6c0;font-size:12px">▼</span></div>'
     +'</div>'
     +'<div class="gc-body" id="gbody_'+gi+'" style="display:none">'
     +pctBadge+goalsHtml+bonusHtml
@@ -452,7 +455,7 @@ function detailsTable(g){
   for(let d=1;d<=DAYS;d++){const b=calcGirlDayBonus(g,d);html+='<td style="border:1px solid #f0c040">'+(b>0?'+'+b:'')+'</td>';}
   html+='<td></td></tr>';
   html+='<tr style="background:#fffdf0;color:#856404;font-weight:700;font-size:9px"><td colspan="3" style="text-align:right;padding-right:4px">عداد التسميع</td><td colspan="10">'+(Number(g.counter)||0)+' مرة = '+counterPoints(g)+' نقطة</td><td></td></tr>';
-  html+='<tr style="background:#e8f5e9;font-weight:700;font-size:9px"><td colspan="3" style="text-align:right;padding-right:4px;color:var(--gDD);border-top:2px solid var(--gM)">معدل اليوم %</td>';
+  html+='<tr style="background:#e8f6ee;font-weight:700;font-size:9px"><td colspan="3" style="text-align:right;padding-right:4px;color:var(--gDD);border-top:2px solid var(--gM)">معدل اليوم %</td>';
   for(let d=1;d<=DAYS;d++){
     const hasData=ROWS.some((_,ri)=>((g.state||{})[sk(ri,d)]||0)!==0);
     if(hasData){const base=calcGirlDayBase(g,d);const pct=Math.min(100,Math.round(base/dayMax*100));const color=pct>=80?'var(--gD)':pct>=50?'#b8860b':'var(--rD)';html+='<td style="color:'+color+';font-weight:700;border-top:2px solid var(--gM)">'+pct+'%</td>';}
