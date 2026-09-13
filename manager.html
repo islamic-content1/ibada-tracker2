@@ -50,6 +50,24 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 .admin-btn{font-family:inherit;font-size:12px;font-weight:700;border-radius:9px;padding:10px;border:none;cursor:pointer;width:100%;margin-top:8px}
 .admin-del{background:#fff8e1;color:#856404;border:1.5px solid #f0c040}
 .admin-panel-note{font-size:10px;color:var(--mu);line-height:1.6;margin-top:7px;text-align:center}
+.team-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:14px;margin-bottom:1rem;box-shadow:var(--sh);overflow:hidden}
+.team-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(135deg,#6b4f2a,#9a7438);color:#fff;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;text-align:right}
+.team-body{display:none;padding:11px}
+.team-body.open{display:block}
+.team-help{font-size:10.5px;color:var(--mu);line-height:1.6;margin-bottom:9px;text-align:center}
+.team-setup{background:#fffdf7;border:1px solid var(--bd);border-radius:10px;padding:9px;margin-bottom:10px}
+.team-setup-title{font-size:11px;font-weight:700;color:#6b4f2a;margin-bottom:7px}
+.team-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.team-form select{min-width:0;width:100%;font-family:inherit;font-size:11px;border:1px solid var(--bd);border-radius:8px;padding:7px 4px;background:#fff;color:var(--tx)}
+.team-actions{display:flex;gap:6px;margin-top:7px}
+.team-add,.team-clear{flex:1;border:none;border-radius:8px;padding:8px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer}
+.team-add{background:#6b4f2a;color:#fff}.team-clear{background:#fff;color:var(--rD);border:1px solid #e07a7a}
+.team-rank{display:flex;align-items:center;gap:8px;padding:9px;border:1px solid var(--bd);border-radius:10px;background:#fff;margin-bottom:6px}
+.team-rank.t1{background:linear-gradient(135deg,#fef9e7,#fef3cd);border-color:#f0c040}.team-rank.t2{background:linear-gradient(135deg,#f8f9fa,#e9ecef);border-color:#adb5bd}.team-rank.t3{background:linear-gradient(135deg,#fdf5ed,#f5e6d3);border-color:#cd9a6c}
+.team-members{flex:1;min-width:0}.team-names{font-size:12px;font-weight:700;line-height:1.5}.team-meta{font-size:9.5px;color:var(--mu)}
+.team-total{font-size:16px;font-weight:700;color:#6b4f2a;white-space:nowrap}
+.team-del{border:none;background:transparent;color:#c0392b;font-size:15px;cursor:pointer;padding:3px}
+.team-empty{text-align:center;color:var(--mu);font-size:11px;padding:9px}
 .cat-rank-btn,.toggle-btn{width:100%;padding:8px 10px;background:#e8f6ee;color:var(--gDD);border:1px solid var(--gM);border-radius:9px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;margin:5px 0;text-align:right;display:flex;justify-content:space-between;align-items:center}
 .cat-rank-body{display:none;background:#fff;border:1px solid var(--bd);border-radius:9px;padding:8px;margin-bottom:8px}
 .how-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:14px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--sh)}
@@ -145,6 +163,22 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
   <button class="admin-btn admin-del" onclick="deleteSelectedGirl()">حذف البنت نهائياً من السجل</button>
   <div class="admin-panel-note">تحذير: سيتم إزالة البنت وجميع بياناتها من الشيت نهائياً.</div>
 </div>
+<div class="team-box">
+  <button class="team-head" onclick="toggleTeams()"><span>👥 ترتيب الثنائيات والثلاثيات</span><span id="teamArrow">▼</span></button>
+  <div class="team-body" id="teamBody">
+    <div class="team-help">اختاري بنتين للثنائية، أو أضيفي بنتًا ثالثة للثلاثية. سيُرتّب المجموع من الأعلى إلى الأقل تلقائيًا.</div>
+    <div class="team-setup">
+      <div class="team-setup-title">إضافة مجموعة</div>
+      <div class="team-form">
+        <select id="teamGirl1"><option value="">البنت الأولى</option></select>
+        <select id="teamGirl2"><option value="">البنت الثانية</option></select>
+        <select id="teamGirl3"><option value="">الثالثة (اختياري)</option></select>
+      </div>
+      <div class="team-actions"><button class="team-add" onclick="addTeam()">+ إضافة ثنائية/ثلاثية</button><button class="team-clear" onclick="clearTeams()">مسح المجموعات</button></div>
+    </div>
+    <div id="teamRankings"><div class="team-empty">لم تُضف أي مجموعة بعد</div></div>
+  </div>
+</div>
 <div id="main"><div class="empty">🌿<br>اضغطي "تحديث" لتحميل نتائج البنات</div></div>
 <div id="toast"></div>
 
@@ -191,6 +225,7 @@ const VARIABLE_BONUS_ROWS=new Set([3,4,8,10,11]);
 const EDITABLE_BASIC_ROWS=new Set([13,14]);
 const CAT_ORDER=['الأذكار','القرآن','القيام','الصلاة','الذكر','صدقة','تزكية'];
 let girlsData=[];
+let savedTeams=readJSON(localStorage.getItem('worshipTeamsV1'),[]);
 const sk=(r,d)=>r+'-'+d;
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function readJSON(v,fb){try{return v?JSON.parse(v):fb}catch(e){return fb}}
@@ -318,7 +353,7 @@ async function loadData(){
       };
     });
     document.getElementById('lastUp').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar');
-    render();populateAdminSelect();showToast('تم التحديث ✓ — '+girlsData.length+' بنت');
+    render();populateAdminSelect();populateTeamSelects();renderTeams();showToast('تم التحديث ✓ — '+girlsData.length+' بنت');
   }catch(e){console.error(e);showToast('خطأ في التحميل');}
   btn.textContent='↻ تحديث النتائج';btn.classList.remove('loading');btn.disabled=false;
 }
@@ -472,6 +507,51 @@ function populateAdminSelect(){
   girlsData.map(g=>g.name).filter(Boolean).sort((a,b)=>String(a).localeCompare(String(b),'ar')).forEach(name=>{
     const opt=document.createElement('option');opt.value=name;opt.textContent=name;sel.appendChild(opt);
   });
+}
+
+function populateTeamSelects(){
+  const names=girlsData.map(g=>g.name).filter(Boolean).sort((a,b)=>String(a).localeCompare(String(b),'ar'));
+  [1,2,3].forEach(n=>{
+    const sel=document.getElementById('teamGirl'+n);if(!sel)return;
+    const current=sel.value;
+    sel.innerHTML='<option value="">'+(n===1?'البنت الأولى':n===2?'البنت الثانية':'الثالثة (اختياري)')+'</option>';
+    names.forEach(name=>{const opt=document.createElement('option');opt.value=name;opt.textContent=name;sel.appendChild(opt);});
+    if(names.includes(current))sel.value=current;
+  });
+}
+function toggleTeams(){
+  const body=document.getElementById('teamBody'),arrow=document.getElementById('teamArrow');
+  const open=body.classList.toggle('open');arrow.textContent=open?'▲':'▼';
+}
+function addTeam(){
+  const members=[1,2,3].map(n=>document.getElementById('teamGirl'+n).value).filter(Boolean);
+  if(members.length<2){showToast('اختاري بنتين على الأقل');return;}
+  if(new Set(members).size!==members.length){showToast('لا يمكن تكرار نفس البنت بالمجموعة');return;}
+  const key=[...members].sort((a,b)=>a.localeCompare(b,'ar')).join('|');
+  if(savedTeams.some(t=>[...t].sort((a,b)=>a.localeCompare(b,'ar')).join('|')===key)){showToast('هذه المجموعة مضافة مسبقًا');return;}
+  savedTeams.push(members);saveTeams();renderTeams();
+  [1,2,3].forEach(n=>document.getElementById('teamGirl'+n).value='');
+  showToast('تمت إضافة المجموعة ✓');
+}
+function deleteTeam(index){savedTeams.splice(index,1);saveTeams();renderTeams();}
+function clearTeams(){
+  if(!savedTeams.length)return;
+  if(!confirm('متأكدة من مسح جميع الثنائيات والثلاثيات؟'))return;
+  savedTeams=[];saveTeams();renderTeams();showToast('تم مسح المجموعات');
+}
+function saveTeams(){localStorage.setItem('worshipTeamsV1',JSON.stringify(savedTeams));}
+function renderTeams(){
+  const cont=document.getElementById('teamRankings');if(!cont)return;
+  const totals=new Map(girlsData.map(g=>[String(g.name),Number(g.grand)||0]));
+  const valid=savedTeams.map((members,index)=>({members,index,total:members.reduce((s,name)=>s+(totals.get(String(name))||0),0)}))
+    .sort((a,b)=>b.total-a.total||a.members.join(' ').localeCompare(b.members.join(' '),'ar'));
+  if(!valid.length){cont.innerHTML='<div class="team-empty">لم تُضف أي مجموعة بعد</div>';return;}
+  cont.innerHTML=valid.map((team,i)=>{
+    const rank=1+valid.filter((x,j)=>j<i&&x.total>team.total).length;
+    const cls=rankItemClass(rank),ncls=rankNumClass(rank);
+    const details=team.members.map(name=>esc(name)+' ('+(totals.get(String(name))||0)+')').join(' + ');
+    return '<div class="team-rank '+cls+'"><div class="rnum '+ncls+'">'+rankMedal(rank)+'</div><div class="team-members"><div class="team-names">'+team.members.map(esc).join(' + ')+'</div><div class="team-meta">'+details+'</div></div><div class="team-total">'+team.total+' نقطة</div><button class="team-del" onclick="deleteTeam('+team.index+')" title="حذف المجموعة">×</button></div>';
+  }).join('');
 }
 function deleteSelectedGirl(){
   const sel=document.getElementById('adminGirlSelect');
