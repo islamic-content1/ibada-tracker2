@@ -225,7 +225,7 @@ const VARIABLE_BONUS_ROWS=new Set([3,4,8,10,11]);
 const EDITABLE_BASIC_ROWS=new Set([13,14]);
 const CAT_ORDER=['الأذكار','القرآن','القيام','الصلاة','الذكر','صدقة','تزكية'];
 let girlsData=[];
-let savedTeams=readJSON(localStorage.getItem('worshipTeamsV1'),[]);
+let savedTeams=normalizeTeams(readJSON(localStorage.getItem('worshipTeamsV1'),[]));
 const sk=(r,d)=>r+'-'+d;
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function readJSON(v,fb){try{return v?JSON.parse(v):fb}catch(e){return fb}}
@@ -511,12 +511,13 @@ function populateAdminSelect(){
 
 function populateTeamSelects(){
   const names=girlsData.map(g=>g.name).filter(Boolean).sort((a,b)=>String(a).localeCompare(String(b),'ar'));
+  const assigned=new Set(savedTeams.flat());
   [1,2,3].forEach(n=>{
     const sel=document.getElementById('teamGirl'+n);if(!sel)return;
     const current=sel.value;
     sel.innerHTML='<option value="">'+(n===1?'البنت الأولى':n===2?'البنت الثانية':'الثالثة (اختياري)')+'</option>';
-    names.forEach(name=>{const opt=document.createElement('option');opt.value=name;opt.textContent=name;sel.appendChild(opt);});
-    if(names.includes(current))sel.value=current;
+    names.filter(name=>!assigned.has(name)).forEach(name=>{const opt=document.createElement('option');opt.value=name;opt.textContent=name;sel.appendChild(opt);});
+    if(names.includes(current)&&!assigned.has(current))sel.value=current;
   });
 }
 function toggleTeams(){
@@ -527,17 +528,30 @@ function addTeam(){
   const members=[1,2,3].map(n=>document.getElementById('teamGirl'+n).value).filter(Boolean);
   if(members.length<2){showToast('اختاري بنتين على الأقل');return;}
   if(new Set(members).size!==members.length){showToast('لا يمكن تكرار نفس البنت بالمجموعة');return;}
+  const assigned=new Set(savedTeams.flat());
+  const repeated=members.find(name=>assigned.has(name));
+  if(repeated){showToast(repeated+' موجودة في مجموعة أخرى');populateTeamSelects();return;}
   const key=[...members].sort((a,b)=>a.localeCompare(b,'ar')).join('|');
   if(savedTeams.some(t=>[...t].sort((a,b)=>a.localeCompare(b,'ar')).join('|')===key)){showToast('هذه المجموعة مضافة مسبقًا');return;}
-  savedTeams.push(members);saveTeams();renderTeams();
-  [1,2,3].forEach(n=>document.getElementById('teamGirl'+n).value='');
+  savedTeams.push(members);saveTeams();renderTeams();populateTeamSelects();
   showToast('تمت إضافة المجموعة ✓');
 }
-function deleteTeam(index){savedTeams.splice(index,1);saveTeams();renderTeams();}
+function deleteTeam(index){savedTeams.splice(index,1);saveTeams();renderTeams();populateTeamSelects();}
 function clearTeams(){
   if(!savedTeams.length)return;
   if(!confirm('متأكدة من مسح جميع الثنائيات والثلاثيات؟'))return;
-  savedTeams=[];saveTeams();renderTeams();showToast('تم مسح المجموعات');
+  savedTeams=[];saveTeams();renderTeams();populateTeamSelects();showToast('تم مسح المجموعات');
+}
+function normalizeTeams(teams){
+  if(!Array.isArray(teams))return [];
+  const used=new Set(),clean=[];
+  teams.forEach(team=>{
+    if(!Array.isArray(team))return;
+    const members=[...new Set(team.map(String).filter(Boolean))].filter(name=>!used.has(name)).slice(0,3);
+    if(members.length<2)return;
+    members.forEach(name=>used.add(name));clean.push(members);
+  });
+  return clean;
 }
 function saveTeams(){localStorage.setItem('worshipTeamsV1',JSON.stringify(savedTeams));}
 function renderTeams(){
