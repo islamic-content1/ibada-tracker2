@@ -511,13 +511,13 @@ function populateAdminSelect(){
 
 function populateTeamSelects(){
   const names=girlsData.map(g=>g.name).filter(Boolean).sort((a,b)=>String(a).localeCompare(String(b),'ar'));
-  const assigned=new Set(savedTeams.flat());
+  const assigned=new Set(savedTeams.flat().map(teamKey));
   [1,2,3].forEach(n=>{
     const sel=document.getElementById('teamGirl'+n);if(!sel)return;
     const current=sel.value;
     sel.innerHTML='<option value="">'+(n===1?'البنت الأولى':n===2?'البنت الثانية':'الثالثة (اختياري)')+'</option>';
-    names.filter(name=>!assigned.has(name)).forEach(name=>{const opt=document.createElement('option');opt.value=name;opt.textContent=name;sel.appendChild(opt);});
-    if(names.includes(current)&&!assigned.has(current))sel.value=current;
+    names.filter(name=>!assigned.has(teamKey(name))).forEach(name=>{const opt=document.createElement('option');opt.value=name;opt.textContent=name;sel.appendChild(opt);});
+    if(names.includes(current)&&!assigned.has(teamKey(current)))sel.value=current;
   });
 }
 function toggleTeams(){
@@ -527,12 +527,10 @@ function toggleTeams(){
 function addTeam(){
   const members=[1,2,3].map(n=>document.getElementById('teamGirl'+n).value).filter(Boolean);
   if(members.length<2){showToast('اختاري بنتين على الأقل');return;}
-  if(new Set(members).size!==members.length){showToast('لا يمكن تكرار نفس البنت بالمجموعة');return;}
-  const assigned=new Set(savedTeams.flat());
-  const repeated=members.find(name=>assigned.has(name));
+  if(new Set(members.map(teamKey)).size!==members.length){showToast('لا يمكن تكرار نفس البنت بالمجموعة');return;}
+  const assigned=new Set(savedTeams.flat().map(teamKey));
+  const repeated=members.find(name=>assigned.has(teamKey(name)));
   if(repeated){showToast(repeated+' موجودة في مجموعة أخرى');populateTeamSelects();return;}
-  const key=[...members].sort((a,b)=>a.localeCompare(b,'ar')).join('|');
-  if(savedTeams.some(t=>[...t].sort((a,b)=>a.localeCompare(b,'ar')).join('|')===key)){showToast('هذه المجموعة مضافة مسبقًا');return;}
   savedTeams.push(members);saveTeams();renderTeams();populateTeamSelects();
   showToast('تمت إضافة المجموعة ✓');
 }
@@ -547,23 +545,28 @@ function normalizeTeams(teams){
   const used=new Set(),clean=[];
   teams.forEach(team=>{
     if(!Array.isArray(team))return;
-    const members=[...new Set(team.map(String).filter(Boolean))].filter(name=>!used.has(name)).slice(0,3);
+    const members=[];
+    team.map(String).filter(Boolean).forEach(name=>{
+      const key=teamKey(name);
+      if(key&&!used.has(key)&&!members.some(existing=>teamKey(existing)===key)&&members.length<3)members.push(name);
+    });
     if(members.length<2)return;
-    members.forEach(name=>used.add(name));clean.push(members);
+    members.forEach(name=>used.add(teamKey(name)));clean.push(members);
   });
   return clean;
 }
+function teamKey(name){return String(name||'').normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim().toLocaleLowerCase('ar');}
 function saveTeams(){localStorage.setItem('worshipTeamsV1',JSON.stringify(savedTeams));}
 function renderTeams(){
   const cont=document.getElementById('teamRankings');if(!cont)return;
-  const totals=new Map(girlsData.map(g=>[String(g.name),Number(g.grand)||0]));
-  const valid=savedTeams.map((members,index)=>({members,index,total:members.reduce((s,name)=>s+(totals.get(String(name))||0),0)}))
+  const totals=new Map(girlsData.map(g=>[teamKey(g.name),Number(g.grand)||0]));
+  const valid=savedTeams.map((members,index)=>({members,index,total:members.reduce((s,name)=>s+(totals.get(teamKey(name))||0),0)}))
     .sort((a,b)=>b.total-a.total||a.members.join(' ').localeCompare(b.members.join(' '),'ar'));
   if(!valid.length){cont.innerHTML='<div class="team-empty">لم تُضف أي مجموعة بعد</div>';return;}
   cont.innerHTML=valid.map((team,i)=>{
     const rank=1+valid.filter((x,j)=>j<i&&x.total>team.total).length;
     const cls=rankItemClass(rank),ncls=rankNumClass(rank);
-    const details=team.members.map(name=>esc(name)+' ('+(totals.get(String(name))||0)+')').join(' + ');
+    const details=team.members.map(name=>esc(name)+' ('+(totals.get(teamKey(name))||0)+')').join(' + ');
     return '<div class="team-rank '+cls+'"><div class="rnum '+ncls+'">'+rankMedal(rank)+'</div><div class="team-members"><div class="team-names">'+team.members.map(esc).join(' + ')+'</div><div class="team-meta">'+details+'</div></div><div class="team-total">'+team.total+' نقطة</div><button class="team-del" onclick="deleteTeam('+team.index+')" title="حذف المجموعة">×</button></div>';
   }).join('');
 }
