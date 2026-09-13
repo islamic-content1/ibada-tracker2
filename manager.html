@@ -2,6 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نتائج برنامج عبادة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,7 +169,7 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 <div class="team-box">
   <button class="team-head" onclick="toggleTeams()"><span>👥 ترتيب الثنائيات والثلاثيات</span><span id="teamArrow">▼</span></button>
   <div class="team-body" id="teamBody">
-    <div class="team-help">اختاري بنتين للثنائية، أو أضيفي بنتًا ثالثة للثلاثية. سيُرتّب المجموع من الأعلى إلى الأقل تلقائيًا.</div>
+    <div class="team-help">اختاري بنتين للثنائية، أو أضيفي بنتًا ثالثة للثلاثية. كل بنت مسموح لها بمجموعة واحدة فقط.<br><b>نسخة منع التكرار 4</b></div>
     <div class="team-setup">
       <div class="team-setup-title">إضافة مجموعة</div>
       <div class="team-form">
@@ -559,6 +562,13 @@ function teamKey(name){return String(name||'').normalize('NFKC').replace(/[\u200
 function saveTeams(){localStorage.setItem('worshipTeamsV1',JSON.stringify(savedTeams));}
 function renderTeams(){
   const cont=document.getElementById('teamRankings');if(!cont)return;
+  // حماية نهائية: قبل كل عرض نحذف أي تكرار بين المجموعات، حتى لو جاء من تخزين قديم.
+  const cleaned=normalizeTeams(savedTeams);
+  if(JSON.stringify(cleaned)!==JSON.stringify(savedTeams)){
+    savedTeams=cleaned;
+    saveTeams();
+    populateTeamSelects();
+  }
   const totals=new Map(girlsData.map(g=>[teamKey(g.name),Number(g.grand)||0]));
   const valid=savedTeams.map((members,index)=>({members,index,total:members.reduce((s,name)=>s+(totals.get(teamKey(name))||0),0)}))
     .sort((a,b)=>b.total-a.total||a.members.join(' ').localeCompare(b.members.join(' '),'ar'));
