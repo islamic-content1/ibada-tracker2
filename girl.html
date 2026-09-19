@@ -140,7 +140,7 @@ tr.tr-day td.pts-total{background:var(--primary-dark);font-size:11px;font-weight
 .update-toast button{background:#fff;color:#0f4a28;border:none;border-radius:9px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Amiri',serif!important;white-space:nowrap}
 </style>
 <script>
-window.APP_VERSION = "2026.08.30.5";
+window.APP_VERSION = "2026.09.19.1";
 </script>
 </head>
 <body>
@@ -151,31 +151,13 @@ window.APP_VERSION = "2026.08.30.5";
   <p>كبسة = عملته ✓ &nbsp;|&nbsp; كبستين = ما عملته ✗ &nbsp;|&nbsp; ثلاث = إلغاء</p>
 </div>
 <div class="how-box">
-  <div class="how-hdr" onclick="toggleHow()"><span>كيف تُحسب النقاط؟</span><span id="howArr">▼</span></div>
+  <div class="how-hdr" onclick="toggleHow()"><span>العبادات الموجودة في الجدول</span><span id="howArr">▼</span></div>
   <div class="how-body" id="howBody">
-    <div class="sec-title">الأذكار</div><div class="row"><span>أذكار الصباح / المساء / النوم</span><span>5 نقاط</span></div>
-    <div class="sec-title">القرآن</div>
-    <div class="row"><span>ثلث / نصف / كاملة البقرة</span><span>10 / 15 / 20 نقطة</span></div>
-    <div class="row"><span>جزء قرآن</span><span>10 نقاط</span></div>
-    <div class="row"><span>حفظ قرآن</span><span>10 نقاط</span></div>
-    <div class="sec-title">القيام</div>
-    <div class="row"><span>دعاء الاستيقاظ من النوم</span><span>3 نقاط</span></div>
-    <div class="row"><span>قراءة خواتيم آل عمران</span><span>5 نقاط</span></div>
-    <div class="row"><span>ركعات القيام (ركعتان أساسي + بونص ما فوق)</span><span>2 نقطة+</span></div>
-    <div class="row" style="background:#fff8e1;border:1px solid #f0c040"><span>⭐ ركعتين تسابيح (بونص)</span><span style="color:#b8860b">+6 نقاط</span></div>
-    <div class="sec-title">الصلاة</div>
-    <div class="row"><span>ركعات ضحى / أوابين — كل ركعتين</span><span>2 نقطة</span></div>
-    <div class="row"><span>فروض الصلاة</span><span>5 نقاط</span></div>
-    <div class="row"><span>سنن الصلوات</span><span>21 نقطة</span></div>
-    <div style="font-size:9px;color:var(--mu);line-height:1.6;margin:2px 8px 5px">٢ الفجر، ٤ الظهر القبلية، ٤ الظهر البعدية، ٤ العصر، ٢ المغرب، ٢ العشاء، و٣ الشفع والوتر (المجموع ٢١ ركعة)</div>
-    <div class="row"><span>أذكار بعد الصلاة</span><span>5 نقاط</span></div>
+    <div class="sec-title">القرآن والصلاة</div>
+    <div class="row"><span>البقرة: ثلث / نصف / كاملة</span><span>10 / 15 / 20 نقطة</span></div>
+    <div class="row"><span>القيام / الضحى / الأوابين</span><span>2 / 4 / 2 نقطة</span></div>
     <div class="sec-title">الذكر — الكمية ثابتة: ٢٠٠</div>
-    <div class="row"><span>صلاة على الرسول / استغفار / تهليل</span><span>10 نقاط لكل ذكر</span></div>
-    <div class="sec-title">صدقة</div><div class="row"><span>صدقة يومية</span><span>1 نقطة</span></div>
-    <div class="sec-title">تزكية</div>
-    <div class="row neg"><span>جلوس على الجوال أكثر من ساعتين</span><span>−2 نقطة</span></div>
-    <div class="row" style="background:#fff8e1;border:1px solid #f0c040"><span>⭐ طلب علم شرعي (بونص)<br><small>دراسة فقه، سيرة، نجوم، أحاديث، أو الاستماع إلى بودكاست بمدة مناسبة بنية طلب العلم الشرعي</small></span><span style="color:#b8860b">+5 نقاط</span></div>
-    <div class="sec-title">عداد</div><div class="row"><span>أخذ موعد تسميع قرآن</span><span>5 نقاط/مرة</span></div>
+    <div class="row"><span>الصلاة على الرسول / الاستغفار / التهليل</span><span>10 نقاط لكل ذكر</span></div>
   </div>
 </div>
 <div class="leg">
@@ -186,11 +168,11 @@ window.APP_VERSION = "2026.08.30.5";
 <div class="nr"><label>الاسم:</label><input type="text" id="userName" placeholder="اسمك هنا..."/></div>
 <div id="statusBar" class="status-bar"></div>
 <div class="how-box" id="goalsBox">
-  <div class="how-hdr" onclick="toggleGoals()" style="background:var(--gold)"><span>🎯 حددي كميتك من هذه العبادات</span><span id="goalsArr">▼</span></div>
+  <div class="how-hdr" onclick="toggleGoals()" style="background:var(--gold)"><span>📖 حددي مقدار قراءة البقرة</span><span id="goalsArr">▼</span></div>
   <div class="how-body" id="goalsBody" style="padding:14px">
-    <div style="font-size:11px;color:var(--mu);margin-bottom:12px;background:#fff8e1;border-radius:8px;padding:8px 10px;border:1px solid #f0c040;line-height:1.7">حددي هدفك الشخصي لكل عبادة — الكمية الأساسية هي المعتمدة لحساب المعدل من 100، وأي زيادة تُحسب بونص إضافي ⭐</div>
+    <div style="font-size:11px;color:var(--mu);margin-bottom:12px;background:#fff8e1;border-radius:8px;padding:8px 10px;border:1px solid #f0c040;line-height:1.7">اختاري مرة واحدة: ثلث البقرة، نصفها، أو كاملة. يُطبّق اختيارك على كل أيام الجدول.</div>
     <div id="goalsRows"></div>
-    <div style="font-size:10px;color:var(--mu);text-align:center;margin-top:8px;background:#e8f6ee;border-radius:6px;padding:6px">الهدف يُطبَّق على الأيام العشرة — يمكنك تعديل يوم بعينه من داخل الجدول</div>
+    <div style="font-size:10px;color:var(--mu);text-align:center;margin-top:8px;background:#e8f6ee;border-radius:6px;padding:6px">يمكنك تغيير الاختيار لاحقًا متى أردتِ</div>
   </div>
 </div>
 <div class="tw"><table>
@@ -201,18 +183,6 @@ window.APP_VERSION = "2026.08.30.5";
   </tr></thead>
   <tbody id="tbody"></tbody>
 </table></div>
-<div class="counter-box">
-  <div class="counter-title">📖 أخذ موعد تسميع قرآن — 5 نقاط لكل مرة</div>
-  <div class="counter-row">
-    <div class="counter-name">عدد المرات:</div>
-    <div class="counter-btns">
-      <button class="counter-btn" onclick="changeCounter(-1)">−</button>
-      <div class="counter-val" id="counterVal">0</div>
-      <button class="counter-btn" onclick="changeCounter(1)">+</button>
-    </div>
-    <div class="counter-pts" id="counterPts">= 0 نقطة</div>
-  </div>
-</div>
 <div class="gc">
   <div class="sc"><div class="sl">المجموع</div><div class="sv" id="grandVal">0</div></div>
   <div class="sc"><div class="sl">المعدل</div><div class="sv" id="avgVal">—</div></div>
@@ -272,50 +242,31 @@ function closePdf(){
 }
 
 const ROWS=[
-  {cat:'الأذكار',ibada:'أذكار الصباح',pts:5,fixed:true},
-  {cat:'الأذكار',ibada:'أذكار المساء',pts:5,fixed:true},
-  {cat:'الأذكار',ibada:'أذكار النوم',pts:5,fixed:true},
-  {cat:'القرآن',ibada:'ثلث البقرة',pts:10,badil:'ورد يا لطيف'},
-  {cat:'القرآن',ibada:'جزء قرآن',pts:10,badil:'٣× أسماء الله الحسنى مع دعائها — عن كل جزء'},
-  {cat:'القرآن',ibada:'حفظ قرآن',pts:10,fixed:true},
-  {cat:'القيام',ibada:'دعاء الاستيقاظ من النوم',pts:3,pdfLink:'c1',pdfTitle:'دعاء الاستيقاظ من النوم'},
-  {cat:'القيام',ibada:'قراءة خواتيم آل عمران',pts:5,pdfLink:'c2',pdfTitle:'خواتيم آل عمران (190-200)'},
-    {cat:'القيام',ibada:'ركعات القيام',pts:2,badilBook:true},
-  {cat:'القيام',ibada:'ركعتين تسابيح',pts:6,bonus:true},
-  {cat:'الصلاة',ibada:'ركعات ضحى',pts:4,badil:'صيغ الاستغفار (عن الضحى والأوابين معاً)'},
-  {cat:'الصلاة',ibada:'ركعات أوابين',pts:2,badil:'صيغ الاستغفار (عن الضحى والأوابين معاً)'},
-  {cat:'الصلاة',ibada:'فروض الصلاة',pts:5,badil:'٣٣ الباقيات الصالحات عن كل صلاة وسنتها'},
-  {cat:'الصلاة',ibada:'سنن الصلوات',pts:21,badil:'٣٣ الباقيات الصالحات عن كل صلاة وسنتها',note:'٢ الفجر، ٤ الظهر القبلية، ٤ الظهر البعدية، ٤ العصر، ٢ المغرب، ٢ العشاء، و٣ الشفع والوتر (المجموع ٢١ ركعة)'},
-  {cat:'الصلاة',ibada:'أذكار بعد الصلاة',pts:5,fixed:true,note:'آية الكرسي وخواتيم البقرة والمعوذات'},
-  {cat:'الذكر',ibada:'صلاة على الرسول ٢٠٠',pts:10,fixed:true,note:'١٠٠ صباحاً و١٠٠ مساءً'},
-  {cat:'الذكر',ibada:'استغفار ٢٠٠',pts:10,fixed:true,note:'١٠٠ صباحاً و١٠٠ مساءً'},
-  {cat:'الذكر',ibada:'تهليل ٢٠٠',pts:10,fixed:true,note:'١٠٠ صباحاً و١٠٠ مساءً'},
-  {cat:'صدقة',ibada:'صدقة يومية',pts:1,fixed:true},
-  {cat:'تزكية',ibada:'جلوس على الجوال أكثر من ساعتين (دون واتساب)',pts:-2,negative:true,fixed:true},
-  {cat:'تزكية',ibada:'طلب علم شرعي',pts:5,bonus:true,fixed:true,note:'دراسة فقه، سيرة، نجوم، أحاديث، أو الاستماع إلى بودكاست بمدة مناسبة بنية طلب العلم الشرعي'},
+  {key:'baqara',cat:'القرآن',ibada:'البقرة',pts:10},
+  {key:'qiyam',cat:'الصلاة',ibada:'القيام',pts:2,fixed:true},
+  {key:'duha',cat:'الصلاة',ibada:'الضحى',pts:4,fixed:true},
+  {key:'awwabin',cat:'الصلاة',ibada:'الأوابين',pts:2,fixed:true},
+  {key:'salawat',cat:'الذكر',ibada:'الصلاة على الرسول ٢٠٠',pts:10,fixed:true,note:'١٠٠ صباحاً و١٠٠ مساءً'},
+  {key:'istighfar',cat:'الذكر',ibada:'الاستغفار ٢٠٠',pts:10,fixed:true,note:'١٠٠ صباحاً و١٠٠ مساءً'},
+  {key:'tahlil',cat:'الذكر',ibada:'التهليل ٢٠٠',pts:10,fixed:true,note:'١٠٠ صباحاً و١٠٠ مساءً'},
 ];
 
 const IBADA_NOTES={
 
-  'أذكار بعد الصلاة':'آية الكرسي وخواتيم البقرة والمعوذات',
-  'صلاة على الرسول ٢٠٠':'١٠٠ صباحاً و١٠٠ مساءً',
-  'استغفار ٢٠٠':'١٠٠ صباحاً و١٠٠ مساءً',
-  'تهليل ٢٠٠':'١٠٠ صباحاً و١٠٠ مساءً',
+  'الصلاة على الرسول ٢٠٠':'١٠٠ صباحاً و١٠٠ مساءً',
+  'الاستغفار ٢٠٠':'١٠٠ صباحاً و١٠٠ مساءً',
+  'التهليل ٢٠٠':'١٠٠ صباحاً و١٠٠ مساءً',
 };
 
-const DAYS=10,SK='ibada_v13',NK='ibada_name_v13',EDITK='ibada_edit_v13',COUNTERK='ibada_counter_v13',GOALK='ibada_goals_v3';
+const DAYS=10,SK='ibada_simple_v1',NK='ibada_name_v13',EDITK='ibada_simple_edit_v1',COUNTERK='ibada_simple_counter_v1',GOALK='ibada_simple_goals_v1';
 let state={},editedPts={},counterVal=0,personalGoals={};
 
 const GOAL_ITEMS=[
-  {ri:3, name:'ثلث البقرة', unit:'', base:1, baseLabel:'ثلث واحد', opts:['ثلث','نصف','كاملة'], optVals:[1,1.5,3], fixedPts:[10,15,20], noCustom:true},
-  {ri:4, name:'جزء قرآن', unit:'جزء', base:1, baseLabel:'جزء واحد', opts:['جزء','جزآن','٣ أجزاء'], optVals:[1,2,3]},
-  {ri:8, name:'ركعات القيام', unit:'ركعة', base:2, baseLabel:'ركعتان (أدنى)', opts:['٢ ركعتان','٤ ركعات','٦ ركعات','٨ ركعات'], optVals:[2,4,6,8], note:'ركعتين أساسي — ما فوق بونص'},
-  {ri:10, name:'ركعات ضحى', unit:'ركعة', base:4, baseLabel:'٤ ركعات', opts:['٢ ركعة','٤ ركعات','٨ ركعات'], optVals:[2,4,8]},
-  {ri:11, name:'ركعات أوابين', unit:'ركعة', base:2, baseLabel:'٢ ركعتان', opts:['٢ ركعة','٤ ركعات','٦ ركعات'], optVals:[2,4,6]},
+  {ri:0, name:'مقدار قراءة البقرة', unit:'', base:1, baseLabel:'ثلث البقرة', opts:['ثلث','نصف','كاملة'], optVals:[1,1.5,3], fixedPts:[10,15,20], noCustom:true},
 ];
-const VARIABLE_BONUS_ROWS=new Set([3,4,8,10,11]);
-const EDITABLE_BASIC_ROWS=new Set([13,14]);
-const sk=(r,d)=>r+'-'+d;
+const VARIABLE_BONUS_ROWS=new Set([0]);
+const EDITABLE_BASIC_ROWS=new Set();
+const sk=(r,d)=>ROWS[r].key+'-'+d;
 
 function calcPtsTotal(){
   return ROWS.reduce((sum,r,ri)=>{
@@ -385,11 +336,10 @@ function buildGoalsSection(){
       const customRow=document.createElement('div');customRow.className='goal-custom-row';
       const customLbl=document.createElement('span');customLbl.style.cssText='font-size:10px;color:var(--mu)';customLbl.textContent='أو:';
       const inp=document.createElement('input');inp.className='goal-custom-inp';inp.type='number';
-      inp.min=g.ri===8?2:1;inp.step=g.ri===8?2:1;inp.max=9999;inp.placeholder='رقم';
+      inp.min=1;inp.step=1;inp.max=9999;inp.placeholder='رقم';
       const isCustom=!g.optVals.includes(curVal);if(isCustom)inp.value=curVal;
       inp.onchange=function(){
         let v=parseFloat(inp.value);
-        if(g.ri===8)v=Math.max(2,Math.round(v/2)*2);
         if(!isNaN(v)&&v>0){
           personalGoals[g.ri]=v;
           for(let d=1;d<=DAYS;d++){delete editedPts[g.ri+'_'+d];}
@@ -407,8 +357,9 @@ function buildGoalsSection(){
 
 function changeCounter(delta){counterVal=Math.max(0,counterVal+delta);updateCounter();saveCounter();recalc();}
 function updateCounter(){
-  document.getElementById('counterVal').textContent=counterVal;
-  document.getElementById('counterPts').textContent='= '+(counterVal*5)+' نقطة';
+  const val=document.getElementById('counterVal'),pts=document.getElementById('counterPts');
+  if(val)val.textContent=counterVal;
+  if(pts)pts.textContent='= '+(counterVal*5)+' نقطة';
 }
 
 function confirmReset(){
@@ -428,7 +379,6 @@ function getPts(ri,d){
   if(goalItem){
     const goalVal=getGoalVal(ri);
     if(goalItem.fixedPts){const idx=goalItem.optVals.indexOf(goalVal);if(idx>=0)return goalItem.fixedPts[idx];}
-    if(ri===8)return Math.floor(goalVal/2)*2;
     return Math.round((goalVal/goalItem.base)*ROWS[ri].pts);
   }
   return ROWS[ri].pts;
@@ -535,7 +485,6 @@ function build(){
 
 function getBasePtsForCell(ri,d){
   if(ROWS[ri].bonus)return 0;
-  if(ri===8)return (state[sk(8,d)]||0)===1?2:0;
   const key=ri+'_'+d,originalPts=ROWS[ri].pts;
   if(EDITABLE_BASIC_ROWS.has(ri))return editedPts[key]!==undefined?Math.max(0,Math.min(Number(editedPts[key])||0,originalPts)):originalPts;
   if(!VARIABLE_BONUS_ROWS.has(ri))return originalPts;
@@ -543,7 +492,6 @@ function getBasePtsForCell(ri,d){
   return originalPts;
 }
 function getBonusPtsForCell(ri,d){
-  if(ri===8){if((state[sk(8,d)]||0)!==1)return 0;return Math.max(0,getPts(8,d)-2);}
   if(ROWS[ri].bonus)return ROWS[ri].pts;
   if(!VARIABLE_BONUS_ROWS.has(ri))return 0;
   const key=ri+'_'+d,originalPts=ROWS[ri].pts;
@@ -564,7 +512,7 @@ function recalc(){
     const elBase=document.getElementById('dt'+d);if(elBase)elBase.textContent=base||'';
     const elBonus=document.getElementById('dbonus'+d);if(elBonus)elBonus.textContent=bonus>0?'+'+bonus:'';
   }
-  const grand=grandBase+grandBonus+counterVal*5;
+  const grand=grandBase+grandBonus;
   document.getElementById('grandVal').textContent=grand;
   let filled=0;for(let d=1;d<=DAYS;d++)if(ROWS.some((_,ri)=>(state[sk(ri,d)]||0)!==0))filled++;
   document.getElementById('filledVal').textContent=filled+'/'+DAYS;
@@ -584,7 +532,7 @@ function toggleHow(){const body=document.getElementById('howBody');const arr=doc
 async function sendToManager(){
   const name=document.getElementById('userName').value.trim();if(!name){showToast('أدخلي اسمك أولاً');return;}
   const btn=document.getElementById('sendBtn');btn.textContent='جاري الإرسال...';btn.disabled=true;
-  const dt=getDayTotals();let grand=0;dt.forEach(v=>grand+=v);grand+=counterVal*5;
+  const dt=getDayTotals();let grand=0;dt.forEach(v=>grand+=v);
   let filled=0;for(let d=1;d<=DAYS;d++)if(ROWS.some((_,ri)=>(state[sk(ri,d)]||0)!==0))filled++;
   const avg=filled>0?(grand/filled).toFixed(1):'—';
   try{
@@ -596,7 +544,7 @@ async function sendToManager(){
 
 function openReport(){
   const name=document.getElementById('userName').value||'—';
-  const dt=getDayTotals();let grand=0;dt.forEach(v=>grand+=v);grand+=counterVal*5;
+  const dt=getDayTotals();let grand=0;dt.forEach(v=>grand+=v);
   let filled=0;for(let d=1;d<=DAYS;d++)if(ROWS.some((_,ri)=>(state[sk(ri,d)]||0)!==0))filled++;
   const avg=filled>0?(grand/filled).toFixed(1):'—';
   const dayMax=calcDayMax();
@@ -609,7 +557,7 @@ function openReport(){
   ROWS.forEach((r,ri)=>{if(!cats[r.cat])cats[r.cat]={earned:0,max:0,rows:[]};cats[r.cat].max+=Math.max(0,r.pts)*DAYS;let rowEarned=0;for(let d=1;d<=DAYS;d++)if((state[sk(ri,d)]||0)===1)rowEarned+=getPts(ri,d);cats[r.cat].earned+=rowEarned;cats[r.cat].rows.push({ri,ibada:r.ibada,pts:r.pts,earned:rowEarned,negative:r.negative||false});});
   let catsHtml='';
   Object.entries(cats).forEach(([cat,info])=>{const catPct=info.max>0?Math.round(info.earned/info.max*100):0;let rowsHtml='';info.rows.forEach(row=>{const dayDots=Array.from({length:DAYS},(_,di)=>{const v=state[sk(row.ri,di+1)]||0;const bg=v===1?'#d4f4e2':v===2?'#fcd5d5':'#f0f0f0';const color=v===1?'#1a6b3c':v===2?'#c0392b':'#ccc';const sym=v===1?'✓':v===2?'✗':'';return '<div style="width:16px;height:16px;background:'+bg+';border-radius:3px;font-size:8px;font-weight:700;color:'+color+';display:flex;align-items:center;justify-content:center">'+sym+'</div>';}).join('');rowsHtml+='<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;background:#faf8f3;margin-bottom:3px"><div style="flex:1;font-size:11px;color:'+(row.negative?'#ef4444':'#2c2416')+'">'+row.ibada+'</div><div style="display:flex;gap:2px">'+dayDots+'</div><div style="width:28px;text-align:center;font-size:11px;font-weight:700;color:'+(row.negative?'#ef4444':'#1a6b3c')+'">'+row.earned+'</div></div>';});catsHtml+='<div style="margin-bottom:12px"><div style="background:#1a6b3c;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;margin-bottom:6px;display:flex;justify-content:space-between"><span>'+cat+'</span><span>'+info.earned+' نقطة ('+catPct+'%)</span></div>'+rowsHtml+'</div>';});
-  const counterHtml=counterVal>0?'<div style="background:#fff;border-radius:12px;padding:14px;border:1px solid #e2d9c8;margin-bottom:1.2rem"><div style="font-size:13px;font-weight:700;color:#1a6b3c;margin-bottom:8px">📖 أخذ موعد تسميع قرآن</div><div style="font-size:13px;color:#2c2416">عدد المرات: <b>'+counterVal+'</b> = <b style="color:#1a6b3c">'+(counterVal*5)+'</b> نقطة</div></div>':'';
+  const counterHtml='';
   const rHtml='<div style="background:linear-gradient(135deg,#0f4a28,#1a6b3c);color:#fff;padding:1.4rem;border-radius:14px;text-align:center;margin-bottom:1.2rem"><div style="font-size:13px;color:#a8e6c0;margin-bottom:4px">بسم الله الرحمن الرحيم</div><div style="font-size:20px;font-weight:800">تقرير برنامج عبادة</div><div style="font-size:13px;opacity:.8;margin-top:3px">'+name+'</div></div>'
   +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px"><div style="background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid #e2d9c8"><div style="font-size:24px;font-weight:800;color:#1a6b3c">'+grand+'</div><div style="font-size:10px;color:#7a6a52">المجموع</div></div><div style="background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid #e2d9c8"><div style="font-size:24px;font-weight:800;color:#1a6b3c">'+avg+'</div><div style="font-size:10px;color:#7a6a52">المعدل</div></div><div style="background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid #e2d9c8"><div style="font-size:24px;font-weight:800;color:#1a6b3c">'+filled+'<span style="font-size:14px;color:#7a6a52">/'+DAYS+'</span></div><div style="font-size:10px;color:#7a6a52">الأيام</div></div></div>'
   +'<div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:10px;padding:12px;text-align:center;border:1px solid #1a6b3c;margin-bottom:1.2rem"><div style="font-size:22px;font-weight:800;color:#0f4a28">'+pctDay+'</div><div style="font-size:10px;color:#7a6a52">📊 معدل اليوم من 100</div></div>'
