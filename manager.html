@@ -567,6 +567,7 @@ function renderTeams(){
     return '<div class="team-rank '+cls+'"><div class="rnum '+ncls+'">'+rankMedal(rank)+'</div><div class="team-members"><div class="team-names">'+team.members.map(esc).join(' + ')+'</div><div class="team-meta">'+details+'</div></div><div class="team-total">'+team.total+' نقطة</div><button class="team-del" onclick="deleteTeam('+team.index+')" title="حذف المجموعة">×</button></div>';
   }).join('');
 }
+  
 function deleteSelectedGirl(){
   const sel=document.getElementById('adminGirlSelect');
   const name=sel?sel.value.trim():'';
