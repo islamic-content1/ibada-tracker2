@@ -114,7 +114,8 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
 .empty{text-align:center;padding:3rem 1rem;color:var(--mu);font-size:13px;line-height:2}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--gD);color:#fff;font-size:13px;padding:9px 22px;border-radius:30px;opacity:0;transition:all .3s;pointer-events:none;z-index:9999;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.completion-card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:1rem;box-shadow:var(--sh)}
+.completion-card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;margin-bottom:1rem;box-shadow:var(--sh);overflow:hidden}
+.completion-head{width:100%;border:0;background:var(--gD);color:#fff;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer}.completion-body{display:none;padding:12px}.completion-body.open{display:block}
 .completion-title{font-size:14px;font-weight:800;color:var(--gDD);margin-bottom:4px}.completion-help{font-size:10px;color:var(--mu);line-height:1.6;margin-bottom:10px}
 .day-tabs{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px}.day-tab{min-width:34px;border:1px solid var(--bd);background:#fff;color:var(--tx);border-radius:8px;padding:6px 8px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer}.day-tab.active{background:var(--gD);color:#fff;border-color:var(--gD)}
 .worship-status{border:1px solid var(--bd);border-radius:11px;padding:10px;margin-top:8px;background:#fff}.worship-status-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.worship-status-name{font-size:12px;font-weight:800;color:var(--tx)}.done-count{background:#dff5e8;color:var(--gDD);border-radius:20px;padding:3px 9px;font-size:10px;font-weight:800;white-space:nowrap}
@@ -169,7 +170,10 @@ body{font-family:'Amiri',system-ui,Tahoma,sans-serif;background:var(--bg);color:
     <div id="teamRankings"><div class="team-empty">لم تُضف أي مجموعة بعد</div></div>
   </div>
 </div>
-<div id="completionSummary" class="completion-card"><div class="completion-title">متابعة إنجاز العبادات</div><div class="completion-help">اختاري اليوم لعرض عدد المنجزات وأسماء غير المنجزات لكل عبادة.</div></div>
+<div id="completionSummary" class="completion-card">
+  <button class="completion-head" onclick="toggleCompletionSummary()"><span>📋 متابعة إنجاز العبادات</span><span id="completionArrow">▼</span></button>
+  <div id="completionSummaryBody" class="completion-body"></div>
+</div>
 <div id="main"><div class="empty">🌿<br>اضغطي "تحديث" لتحميل نتائج البنات</div></div>
 <div id="toast"></div>
 
@@ -337,8 +341,15 @@ function setSummaryDay(day){
   renderCompletionSummary();
 }
 
+function toggleCompletionSummary(){
+  const body=document.getElementById('completionSummaryBody'),arrow=document.getElementById('completionArrow');
+  if(!body)return;
+  const open=body.classList.toggle('open');
+  if(arrow)arrow.textContent=open?'▲':'▼';
+}
+
 function renderCompletionSummary(){
-  const box=document.getElementById('completionSummary');if(!box)return;
+  const box=document.getElementById('completionSummaryBody');if(!box)return;
   const tabs=Array.from({length:DAYS},(_,i)=>'<button class="day-tab '+(selectedSummaryDay===i+1?'active':'')+'" onclick="setSummaryDay('+(i+1)+')">'+(i+1)+'</button>').join('');
   let html='<div class="completion-title">متابعة إنجاز العبادات — اليوم '+selectedSummaryDay+'</div><div class="completion-help">العدد يوضح المنجزات من مجموع البنات. وتظهر أسماء كل من لم تنجز العبادة أو لم تحدد نتيجتها بعد.</div><div class="day-tabs">'+tabs+'</div>';
   if(!girlsData.length){box.innerHTML=html+'<div class="team-empty">لا توجد بيانات لعرضها بعد</div>';return;}
