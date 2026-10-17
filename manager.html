@@ -577,38 +577,66 @@ function migrateManagerState(rawState){
 }
 
 async function loadData(){
-  const btn=document.getElementById('refreshBtn');btn.textContent='جاري التحميل...';btn.classList.add('loading');btn.disabled=true;
+  const btn=document.getElementById('refreshBtn');
+  btn.textContent='جاري التحميل...';
+  btn.classList.add('loading');
+  btn.disabled=true;
   try{
     const url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&sheet='+encodeURIComponent('بيانات')+'&t='+Date.now();
-    const resp=await fetch(url);const txt=await resp.text();
-    const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const resp=await fetch(url);
+    const txt=await resp.text();
+    const match=txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+    if(!match)throw new Error('تعذر قراءة استجابة الشيت');
+    const json=JSON.parse(match[1]);
     const rows=json.table.rows||[];
-    girlsData=rows.filter(r=>r.c&&r.c[0]&&r.c[0].v&&r.c[0].v!=='الاسم').map(r=>{
-      const c=r.c;
-      const dt=[];for(let i=4;i<14;i++)dt.push(c[i]?Number(c[i].v)||0:0);
-      const state=migrateManagerState(readJSON(c[16]&&c[16].v,{}));
-      const editedPts=readJSON(c[19]&&c[19].v,{});
-      const personalGoals=readJSON(c[21]&&c[21].v,{});
-      const girl={
-        name:c[0].v,
-        grand:c[1]?Number(c[1].v)||0:0,
-        avg:c[2]?c[2].v:'—',
-        filled:c[3]?c[3].v:0,
-        dayTotals:dt,
-        state:state,
-        editedPts:editedPts,
-        counter:Number((c[20]&&c[20].v)||0),
-        personalGoals:personalGoals,
-        lastUpdate:c[17]&&c[17].v?c[17].v.toString():'',
-      };
-      girl.grand=calculatedGrand(girl);
-      girl.dayTotals=Array.from({length:DAYS},(_,i)=>calculatedDayTotal(girl,i+1));
-      return girl;
-    });
+
+    girlsData=rows
+      .filter(r=>r.c&&r.c[0]&&r.c[0].v&&r.c[0].v!=='الاسم')
+      .map(r=>{
+        const c=r.c||[];
+
+        // مخطط 30 يومًا: الأعمدة 4..33 هي مجاميع الأيام.
+        const dt=[];
+        for(let i=4;i<34;i++)dt.push(c[i]?Number(c[i].v)||0:0);
+
+        // بعد 30 يومًا: 34 dayBase, 35 dayBonus, 36 state, 37 lastUpdate,
+        // 38 notes, 39 editedPts, 40 counter, 41 personalGoals.
+        const state=migrateManagerState(readJSON(c[36]&&c[36].v,{}));
+        const editedPts=readJSON(c[39]&&c[39].v,{});
+        const personalGoals=readJSON(c[41]&&c[41].v,{});
+
+        const girl={
+          name:c[0].v,
+          grand:c[1]?Number(c[1].v)||0:0,
+          avg:c[2]?c[2].v:'—',
+          filled:c[3]?Number(c[3].v)||0:0,
+          dayTotals:dt,
+          state,
+          editedPts,
+          counter:Number((c[40]&&c[40].v)||0),
+          personalGoals,
+          lastUpdate:c[37]&&c[37].v?c[37].v.toString():'',
+        };
+
+        // نحسب من state لضمان توافق النقاط والميزات الحالية.
+        girl.grand=calculatedGrand(girl);
+        girl.dayTotals=Array.from({length:DAYS},(_,i)=>calculatedDayTotal(girl,i+1));
+        return girl;
+      });
+
     document.getElementById('lastUp').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar');
-    render();populateAdminSelect();buildPairGroups();showToast('تم التحديث ✓ — '+girlsData.length+' بنت');
-  }catch(e){console.error(e);showToast('خطأ في التحميل');}
-  btn.textContent='↻ تحديث النتائج';btn.classList.remove('loading');btn.disabled=false;
+    render();
+    populateAdminSelect();
+    buildPairGroups();
+    showToast('تم التحديث ✓ — '+girlsData.length+' بنت');
+  }catch(e){
+    console.error(e);
+    showToast('خطأ في التحميل');
+  }finally{
+    btn.textContent='↻ تحديث النتائج';
+    btn.classList.remove('loading');
+    btn.disabled=false;
+  }
 }
 
 function fullThirtyDayRanking(sorted){
