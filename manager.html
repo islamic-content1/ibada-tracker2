@@ -319,8 +319,6 @@ html[data-mode="dark"] #toast{background:#e8ebe9;color:#17191b}
     <div class="row"><span>جزء قرآن</span><span>10 نقاط</span></div>
     <div class="row"><span>حفظ قرآن</span><span>10 نقاط</span></div>
     <div class="sec-title">القيام</div>
-    <div class="row"><span>دعاء الاستيقاظ من النوم</span><span>3 نقاط</span></div>
-    <div class="row"><span>قراءة خواتيم آل عمران</span><span>3 نقاط</span></div>
     <div class="row"><span>ركعات القيام (ركعتان أساسي + بونص ما فوق)</span><span>2 نقطة+</span></div>
     <div class="row" style="background:#fff8e1;border:1px solid #f0c040"><span>⭐ ركعتين تسابيح (بونص)</span><span style="color:#b8860b">+6 نقاط</span></div>
     <div class="sec-title">الصلاة</div>
@@ -328,7 +326,6 @@ html[data-mode="dark"] #toast{background:#e8ebe9;color:#17191b}
     <div class="row"><span>فروض الصلاة</span><span>5 نقاط</span></div>
     <div class="row"><span>سنن الصلوات</span><span>21 نقطة</span></div>
     <div style="font-size:9px;color:var(--mu);line-height:1.6;margin:2px 8px 5px">٢ الفجر، ٤ الظهر القبلية، ٤ الظهر البعدية، ٤ العصر، ٢ المغرب، ٢ العشاء، و٣ الشفع والوتر (المجموع ٢١ ركعة)</div>
-    <div class="row"><span>أذكار بعد الصلاة<br><small>آية الكرسي وخواتيم البقرة والمعوذات و١٠ من الباقيات الصالحات</small></span><span>5 نقاط</span></div>
     <div class="sec-title">الذكر</div>
     <div class="row"><span>صلاة على الرسول / استغفار / تهليل<br><small>تُحدَّد الكمية لكل ذكر في «حددي كميتك» — بحد أقصى ٣٠٠ صباحاً و٣٠٠ مساءً</small></span><span>10–30 نقطة لكل ذكر</span></div>
     <div class="row" style="background:#fff8e1;border:1px solid #f0c040"><span>⭐ سبحان الله وبحمده<br><small>١٠٠ صباحاً و١٠٠ مساءً</small></span><span style="color:#b8860b">+10 نقاط</span></div>
@@ -390,15 +387,12 @@ const ROWS=[
   {cat:'القرآن',ibada:'ثلث البقرة',pts:10},                                             // ri=3
   {cat:'القرآن',ibada:'جزء قرآن',pts:10},                                               // ri=4
   {cat:'القرآن',ibada:'حفظ قرآن',pts:10},                                               // ri=5
-  {cat:'القيام',ibada:'دعاء الاستيقاظ من النوم',pts:3},                                 // ri=6  جديد
-  {cat:'القيام',ibada:'قراءة خواتيم آل عمران',pts:3},                                   // ri=7  جديد
   {cat:'القيام',ibada:'ركعات القيام',pts:2},                                             // ri=8  جديد (أساسي 2، بقية بونص)
   {cat:'القيام',ibada:'ركعتين تسابيح',pts:6,bonus:true},                                // ri=9  جديد بونص
   {cat:'الصلاة',ibada:'ركعات ضحى',pts:4},                                               // ri=10
   {cat:'الصلاة',ibada:'ركعات أوابين',pts:2},                                            // ri=11
   {cat:'الصلاة',ibada:'فروض الصلاة',pts:5},                                             // ri=12
   {cat:'الصلاة',ibada:'سنن الصلوات',pts:21,note:'٢ الفجر، ٤ الظهر القبلية، ٤ الظهر البعدية، ٤ العصر، ٢ المغرب، ٢ العشاء، و٣ الشفع والوتر (المجموع ٢١ ركعة)'}, // ri=13
-  {cat:'الصلاة',ibada:'أذكار بعد الصلاة',pts:5,note:'آية الكرسي وخواتيم البقرة والمعوذات و١٠ من الباقيات الصالحات'}, // ri=14
   {cat:'الذكر',ibada:'صلاة على الرسول',pts:10,note:'حددي كميتك — بحد أقصى ٣٠٠ صباحاً و٣٠٠ مساءً'}, // ri=15
   {cat:'الذكر',ibada:'استغفار',pts:10,note:'حددي كميتك — بحد أقصى ٣٠٠ صباحاً و٣٠٠ مساءً'},     // ri=16
   {cat:'الذكر',ibada:'تهليل',pts:10,note:'حددي كميتك — بحد أقصى ٣٠٠ صباحاً و٣٠٠ مساءً'},      // ri=17
@@ -413,17 +407,17 @@ const ROWS=[
 const GOAL_LABELS={
   3:'ثلث البقرة',
   4:'جزء قرآن',
-  8:'ركعات القيام',   // جديد
-  10:'ركعات ضحى',
-  11:'ركعات أوابين',
-  15:'صلاة على الرسول',
-  16:'استغفار',
-  17:'تهليل'
+  6:'ركعات القيام',   // جديد
+  8:'ركعات ضحى',
+  9:'ركعات أوابين',
+  12:'صلاة على الرسول',
+  13:'استغفار',
+  14:'تهليل'
 };
-const GOAL_UNITS={3:'',4:'جزء',8:'ركعة',10:'ركعة',11:'ركعة',15:'مرة يومياً',16:'مرة يومياً',17:'مرة يومياً'};
-const VARIABLE_BONUS_ROWS=new Set([3,4,8,10,11,15,16,17]);
-const EDITABLE_BASIC_ROWS=new Set([13,14]);
-const DHIKR_ROWS=new Set([15,16,17]);
+const GOAL_UNITS={3:'',4:'جزء',6:'ركعة',8:'ركعة',9:'ركعة',12:'مرة يومياً',13:'مرة يومياً',14:'مرة يومياً'};
+const VARIABLE_BONUS_ROWS=new Set([3,4,6,8,9,12,13,14]);
+const EDITABLE_BASIC_ROWS=new Set([11]);
+const DHIKR_ROWS=new Set([12,13,14]);
 const CAT_ORDER=['الأذكار','القرآن','القيام','الصلاة','الذكر','صدقة','تزكية'];
 let girlsData=[];
 let selectedSummaryDay=1;
@@ -467,7 +461,7 @@ function getPts(g,ri,d){
   if(ep[key]!==undefined)return DHIKR_ROWS.has(ri)?Math.max(0,Math.min(30,Number(ep[key])||0)):(Number(ep[key])||0);
   // هدف شخصي لركعات القيام (ri=8)
   const goals=g.personalGoals||{};
-  if(ri===8&&goals[8]!==undefined)return Math.floor(Number(goals[8])/2)*2;
+  if(ri===6&&goals[6]!==undefined)return Math.floor(Number(goals[6])/2)*2;
   // باقي العبادات ذات الأهداف
   if(goals[ri]!==undefined)return calcGoalPts(ri,goals[ri]);
   return ROWS[ri].pts;
@@ -475,7 +469,7 @@ function getPts(g,ri,d){
 
 function getBasePts(g,ri,d){
   if(ROWS[ri].bonus)return 0;
-  if(ri===8){
+  if(ri===6){
     // أساسي ركعتين = 2 نقطة
     return ((g.state||{})[sk(ri,d)]||0)===1 ? 2 : 0;
   }
@@ -491,7 +485,7 @@ function getBasePts(g,ri,d){
 function getBonusPts(g,ri,d){
   if(ROWS[ri].bonus)return ROWS[ri].pts; // ركعتين تسابيح وطلب علم
   if(!VARIABLE_BONUS_ROWS.has(ri))return 0;
-  if(ri===8){
+  if(ri===6){
     if(((g.state||{})[sk(ri,d)]||0)!==1)return 0;
     return Math.max(0,getPts(g,ri,d)-2);
   }
@@ -505,15 +499,15 @@ function getBonusPts(g,ri,d){
 }
 
 function calcGoalPts(ri,goalVal){
-  if(ri===15||ri===16||ri===17)goalVal=Math.max(200,Math.min(600,Number(goalVal)||200));
+  if(ri===12||ri===13||ri===14)goalVal=Math.max(200,Math.min(600,Number(goalVal)||200));
   if(ri===3){
     if(Number(goalVal)===1.5)return 15;
     if(Number(goalVal)===3)return 20;
     return 10;
   }
-  if(ri===8)return Math.floor(Number(goalVal)/2)*2;
+  if(ri===6)return Math.floor(Number(goalVal)/2)*2;
   const orig=ROWS[ri].pts;
-  const baseVals={4:1,10:4,11:2,15:200,16:200,17:200};
+  const baseVals={4:1,8:4,9:2,12:200,13:200,14:200};
   const base=baseVals[ri]||1;
   return Math.round((Number(goalVal)/base)*orig);
 }
@@ -521,16 +515,16 @@ function calcGoalPts(ri,goalVal){
 function calcDayMax(){
   // الأساسي = كل العبادات بدون bonus وبدون negative، ركعات القيام أساسها 2
   return ROWS.reduce((s,r,ri)=>{
-    if(r.bonus||r.negative)return s;
-    if(ri===8)return s+2;
+    if(r.hidden||r.bonus||r.negative)return s;
+    if(ri===6)return s+2;
     return s+(r.pts>0?r.pts:0);
   },0);
 }
 
 function rowEarned(g,ri){let t=0;for(let d=1;d<=DAYS;d++)if(((g.state||{})[sk(ri,d)]||0)===1)t+=getPts(g,ri,d);return t;}
 function counterPoints(g){return (Number(g.counter)||0)*5;}
-function calculatedGrand(g){return ROWS.reduce((sum,_,ri)=>sum+rowEarned(g,ri),0)+counterPoints(g);}
-function calculatedDayTotal(g,d){let t=0;ROWS.forEach((_,ri)=>{if(((g.state||{})[sk(ri,d)]||0)===1)t+=getPts(g,ri,d);});return t;}
+function calculatedGrand(g){return ROWS.reduce((sum,r,ri)=>sum+(r.hidden?0:rowEarned(g,ri)),0)+counterPoints(g);}
+function calculatedDayTotal(g,d){let t=0;ROWS.forEach((r,ri)=>{if(!r.hidden&&((g.state||{})[sk(ri,d)]||0)===1)t+=getPts(g,ri,d);});return t;}
 function rankMedal(rank){return rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'#'+rank;}
 function rankItemClass(rank){return rank===1?'t1':rank===2?'t2':rank===3?'t3':'';}
 function rankNumClass(rank){return rank===1?'r1':rank===2?'r2':rank===3?'r3':'';}
@@ -539,12 +533,12 @@ function calcGirlDayPct(g){
   const dayMax=calcDayMax();if(!dayMax)return null;
   let count=0,baseSum=0;
   for(let d=1;d<=DAYS;d++){
-    const hasData=ROWS.some((_,ri)=>((g.state||{})[sk(ri,d)]||0)!==0);
+    const hasData=ROWS.some((r,ri)=>!r.hidden&&((g.state||{})[sk(ri,d)]||0)!==0);
     if(!hasData)continue;
     count++;
     // نحسب الأساسي يدوياً (موحّد مع girl.html)
     let base=0;
-    ROWS.forEach((r,ri)=>{if(((g.state||{})[sk(ri,d)]||0)===1)base+=getBasePts(g,ri,d);});
+    ROWS.forEach((r,ri)=>{if(!r.hidden&&((g.state||{})[sk(ri,d)]||0)===1)base+=getBasePts(g,ri,d);});
     baseSum+=base;
   }
   if(!count)return null;
@@ -552,16 +546,16 @@ function calcGirlDayPct(g){
 }
 
 function calcGirlDayBase(g,d){
-  let t=0;ROWS.forEach((r,ri)=>{if(((g.state||{})[sk(ri,d)]||0)===1)t+=getBasePts(g,ri,d);});return t;
+  let t=0;ROWS.forEach((r,ri)=>{if(!r.hidden&&((g.state||{})[sk(ri,d)]||0)===1)t+=getBasePts(g,ri,d);});return t;
 }
 function calcGirlDayBonus(g,d){
-  let t=0;ROWS.forEach((r,ri)=>{if(((g.state||{})[sk(ri,d)]||0)===1)t+=getBonusPts(g,ri,d);});return t;
+  let t=0;ROWS.forEach((r,ri)=>{if(!r.hidden&&((g.state||{})[sk(ri,d)]||0)===1)t+=getBonusPts(g,ri,d);});return t;
 }
 function calcPeriodStats(g,start,end){
   const dayMax=calcDayMax();let points=0,base=0,filled=0;
   for(let d=start;d<=end;d++){
     points+=calculatedDayTotal(g,d);
-    const hasData=ROWS.some((_,ri)=>((g.state||{})[sk(ri,d)]||0)!==0);
+    const hasData=ROWS.some((r,ri)=>!r.hidden&&((g.state||{})[sk(ri,d)]||0)!==0);
     if(hasData){filled++;base+=calcGirlDayBase(g,d);}
   }
   return {points,filled,pct:filled&&dayMax?Math.min(100,Math.round((base/filled)/dayMax*100)):null};
@@ -627,7 +621,7 @@ function periodMetrics(g,start,end){
   let points=0,base=0,daysWithData=0;
   for(let d=start;d<=end;d++){
     points+=calculatedDayTotal(g,d);
-    const hasData=ROWS.some((_,ri)=>((g.state||{})[sk(ri,d)]||0)!==0);
+    const hasData=ROWS.some((r,ri)=>!r.hidden&&((g.state||{})[sk(ri,d)]||0)!==0);
     if(hasData){base+=calcGirlDayBase(g,d);daysWithData++;}
   }
   const pct=daysWithData?Math.min(100,Math.round((base/daysWithData)/calcDayMax()*100)):null;
@@ -785,7 +779,7 @@ function tenDayRankings(){
       let total=0,base=0,daysWithData=0;
       for(let d=start;d<=end;d++){
         total+=calculatedDayTotal(g,d);
-        const hasData=ROWS.some((_,ri)=>((g.state||{})[sk(ri,d)]||0)!==0);
+        const hasData=ROWS.some((r,ri)=>!r.hidden&&((g.state||{})[sk(ri,d)]||0)!==0);
         if(hasData){base+=calcGirlDayBase(g,d);daysWithData++;}
       }
       const avgPct=daysWithData?Math.min(100,Math.round((base/daysWithData)/calcDayMax()*100)):null;
@@ -810,7 +804,7 @@ function perIbadaRanking(){
     const cid='catRank_'+ci;
     html+='<button class="cat-rank-btn" onclick="togglePanel(\''+cid+'\',this)"><span>📌 '+cat+'</span><span>▼</span></button><div class="cat-rank-body" id="'+cid+'">';
     ROWS.forEach((r,ri)=>{
-      if(r.cat!==cat||r.negative)return;
+      if(r.hidden||r.cat!==cat||r.negative)return;
       const ranked=girlsData.map(g=>({name:g.name,total:rowEarned(g,ri)})).filter(x=>x.total>0).sort((a,b)=>b.total-a.total);
       html+='<div class="ibada-rank"><div class="ibada-rank-title">'+esc(r.ibada)+(r.bonus?' ⭐':'')+'</div>';
       if(!ranked.length)html+='<span style="font-size:10px;color:#aaa">لا يوجد إنجاز بعد</span>';
@@ -875,8 +869,9 @@ function detailsTable(g,gi){
   html+='<div class="manager-table-wrap"><table class="manager-detail-table"><thead><tr><th class="catH">الفئة</th><th class="ibH">العبادة</th><th class="ptsH">نقاط</th>';
   days.forEach(d=>html+='<th class="dayH">'+d+'</th>');
   html+='</tr></thead><tbody>';
-  let lastCat='',catRows={};ROWS.forEach(r=>catRows[r.cat]=(catRows[r.cat]||0)+1);
+  let lastCat='',catRows={};ROWS.forEach(r=>{if(!r.hidden)catRows[r.cat]=(catRows[r.cat]||0)+1;});
   ROWS.forEach((r,ri)=>{
+    if(r.hidden)return;
     html+='<tr>';
     if(r.cat!==lastCat){html+='<td class="cat" rowspan="'+catRows[r.cat]+'">'+esc(r.cat)+'</td>';lastCat=r.cat;}
     const meta=[r.note,r.bonus?'بونص':''].filter(Boolean).join(' | ');
@@ -894,7 +889,7 @@ function detailsTable(g,gi){
   html+='<tr class="mgr-day-total"><td colspan="3">مجموع اليوم</td>';
   days.forEach(d=>html+='<td>'+calculatedDayTotal(g,d)+'</td>');
   html+='</tr><tr class="mgr-day-pct"><td colspan="3">معدل اليوم من 100</td>';
-  days.forEach(d=>{const hasData=ROWS.some((_,ri)=>((g.state||{})[sk(ri,d)]||0)!==0);if(hasData){const pct=Math.min(100,Math.round(calcGirlDayBase(g,d)/dayMax*100));html+='<td>'+pct+'%</td>';}else html+='<td>—</td>';});
+  days.forEach(d=>{const hasData=ROWS.some((r,ri)=>!r.hidden&&((g.state||{})[sk(ri,d)]||0)!==0);if(hasData){const pct=Math.min(100,Math.round(calcGirlDayBase(g,d)/dayMax*100));html+='<td>'+pct+'%</td>';}else html+='<td>—</td>';});
   html+='</tr></tbody></table></div>';
   html+='<div style="font-size:10px;color:var(--mu);padding:7px 2px 0">عداد التسميع: '+(Number(g.counter)||0)+' مرة = '+counterPoints(g)+' نقطة</div>';
   return html;
@@ -981,6 +976,7 @@ function exportExcel(){
   girlsData.forEach(g=>{
     const d=[['الفئة','العبادة','النقاط',...Array.from({length:DAYS},(_,i)=>'يوم '+(i+1)),'المجموع']];
     ROWS.forEach((r,ri)=>{
+      if(r.hidden)return;
       let s=0;const row=[r.cat,r.ibada,r.pts];
       for(let day=1;day<=DAYS;day++){const v=((g.state||{})[sk(ri,day)]||0)===1?getPts(g,ri,day):0;row.push(v);s+=v;}
       row.push(s);d.push(row);
