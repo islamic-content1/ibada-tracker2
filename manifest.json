@@ -2,7 +2,7 @@
   "name": "برنامج عبادة",
   "short_name": "عبادة",
   "description": "برنامج متابعة العبادة",
-  "start_url": "./girl.html",
+  "start_url": "/ibada-tracker/app/girl.html?g=g2-63d9c",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fdfaf5",
